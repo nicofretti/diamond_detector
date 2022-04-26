@@ -3,25 +3,6 @@ import cv2
 import numpy as np
 import imutils
 
-
-def detect_shape(contour):
-    # initialize the shape name and approximate the contour
-    shape = "unidentified"
-    perimeter = cv2.arcLength(contour, True)
-    # applying contour approximation (curve can be approximated as short line segments)
-    approx = cv2.approxPolyDP(contour, 0.04 * perimeter, True)
-    if len(approx) < 1:
-        return "unidentified"
-    if len(approx) == 3:
-        return "triangle"
-    elif len(approx) == 4:
-        return "rectangle"
-    elif len(approx) == 5:
-        return "pentagon"
-    elif len(approx) == 6:
-        return "hexagon"
-    return "circle"
-
 if __name__=="__main__":
     arg = argparse.ArgumentParser()
     arg.add_argument("-i", "--image", required=True, help="Path to the image")
@@ -35,7 +16,6 @@ if __name__=="__main__":
     elab = cv2.GaussianBlur(elab, (9, 9), 0)
     elab = cv2.cvtColor(elab, cv2.COLOR_BGR2GRAY)
     elab[elab <= 30] = 0
-    # blur
     #elab = cv2.GaussianBlur(elab, (5, 5), 0)
     #elab = cv2.Canny(elab, 40, 150)
     #elab = cv2.Laplacian(elab, -1, ksize=5, scale=1, delta=0, borderType=cv2.BORDER_DEFAULT)
